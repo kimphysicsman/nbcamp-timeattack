@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+    <title>Title</title>
+
+    <script>
+        function login() {
+            let id = $('#id').val()
+            let pw = $('#pw').val()
+
+            $.ajax({
+                type: "GET",
+                url: `/login?id=${id}&pw=${pw}`,
+                data: {},
+                success: function (response) {
+                    localStorage.setItem('id', id)
+                    localStorage.setItem('login_status', response['result'])
+
+                    console.log(response)
+                    console.log(localStorage)
+                    alert(response['msg'])
+                }
+            })
+        }
+
+        function signup() {
+            let id = $('#id').val()
+            let pw = $('#pw').val()
+
+             $.ajax({
+                type: "POST",
+                url: `/signup`,
+                data: {
+                    id_give: id,
+                    pw_give: pw
+                },
+                success: function (response) {
+                    console.log(response)
+                    alert(response['msg'])
+                }
+            })
+        }
+
+        function move() {
+            if (localStorage.getItem('login_status')) {
+                console.log('게시판 이동 성공')
+            } else {
+                console.log('게시판 이동 실패')
+            }
+        }
+
+    </script>
+    <script src="../../../../메이킹챌린지11기/test/static/js/common.js"></script>
+
+</head>
+<body>
+아이디<input id="id" type="text"/>
+패스워드<input id="pw" type="password"/>
+<button onclick="login()">로그인</button>
+<button onclick="signup()">회원가입</button>
+<button onclick="move()">게시판</button>
+
+</body>
+</html>
